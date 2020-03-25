@@ -14,9 +14,9 @@ def output_clean(text):
 
 def output(result, end_str_id=1):
     # end_str = '\n\n`─────`\n🤖 By [中文翻译机器人](https://t.me/fanyi_bot)'
-    end_str = '\n\n🤖 By @fanyi_bot'
+    end_str = ''
     if end_str_id == 2:
-        end_str = '\n\n🤖 By @fanyi_bot'
+        end_str = ''
     msg_str = output_clean(result)
     try:
         cprint(
