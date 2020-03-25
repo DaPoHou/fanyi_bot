@@ -1,4 +1,5 @@
 import logging
+from langdetect import detect
 from sys import path as syspath
 from configparser import ConfigParser
 from gtrans import trans
@@ -144,16 +145,24 @@ async def zh(message: types.Message):
         await message.reply(result)
 
 
-# 私聊自动检测语言并翻译
+# 自动检测语言并翻译
 @dp.message_handler(content_types=types.message.ContentType.TEXT)
 async def text_message(message: types.Message):
-    chat_type = message.chat.type
-    if chat_type == 'private':
+  #  chat_type = message.chat.type
+  #  if chat_type == 'private':
+  #      clog(message)
+  #      result = trans_c(message.text)
+  #      await message.reply(result)
+   # else:  # 过滤所有群聊、频道
+  #      pass
+   if detect(message.text) != 'en':
         clog(message)
-        result = trans_c(message.text).replace('\n\n🤖 By @fanyi_bot', '')
+        result = trans_c(message.text, 'en')
         await message.reply(result)
-    else:  # 过滤所有群聊、频道
-        pass
+    else:
+        clog(message)
+        result = trans_c(message.text)
+        await message.reply(result)
 
 
 @dp.message_handler()
